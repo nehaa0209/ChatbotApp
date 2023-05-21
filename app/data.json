@@ -1,0 +1,129 @@
+{"intents": [
+    {"tag": "greeting",
+     "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+     "responses": ["Hello, thanks for asking", "Good to see you again", "Hi there, how can I help?"],
+     "context": [""]
+    },
+    {"tag": "goodbye",
+     "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+     "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+     "context": [""]
+    },
+    {"tag": "thanks",
+     "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+     "responses": ["Happy to help!", "Any time!", "My pleasure"],
+     "context": [""]
+    },
+    {"tag": "noanswer",
+     "patterns": [],
+     "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+     "context": [""]
+    },
+    
+    {"tag": "Restaurants",
+    "patterns": ["Looking for restaurants", "Restaurants", "Restaurants near me" ],
+    "responses": ["Hey, What location would you like to dine-in?"],
+    "context": [""]
+    },
+ 
+ 
+    {"tag": "Restaurants",
+     "patterns": ["Looking for restaurants", "Restaurants", "Restaurants near me" ],
+     "responses": ["Hey, What location would you like to dine-in?"],
+     "context": [""]
+    },
+    
+    {"tag": "Location-Cottesloe",
+     "patterns": ["Cottesloe", "In Cottesloe"],
+     "responses": ["These are some of the restaurants in cottesloe that you may like: \n1.[ Ocean Beach Hotel](http://obh.com.au)\n 2. [Longview Cottesloe](https://www.longviewcottesloe.com.au/) 3.[Barchetta](http://www.barchetta.com.au/)" ],
+     "context": [""]
+    },
+ 
+    {"tag": "Location-Cannigton",
+     "patterns": ["Cannington", "In Cannington", "cannington"],
+     "responses": ["These are some of the restaurants in cannington that you may like: \n1. [Roman Palace Italian Restaurant](http://www.romanpalace.com.au/)\n 2. [Emperor’s Kitchen](https://www.emperorskitchen.com.au/) 3. [Ambassador Chinese Restaurant](https://www.ambassadorchineserestaurant.com.au/)" ],
+     "context": [""]
+    },
+ 
+    {"tag": "Location-Fremantle",
+     "patterns": ["Fremantle", "In Fremantle", "fremantle"],
+     "responses": ["These are some of the restaurants in fremantle that you may like: \n1. [Little Fire](http://www.little-fire.com.au/)\n 2. [Angel's House](https://obee.com.au/angelshouse/) 3. [Nunzio's Restaurant](https://www.nunzios.net.au/)" ],
+     "context": [""]
+    },
+ 
+    {"tag": "Location-Victoria Park",
+    "patterns": ["Victoria Park", "In Victoria Park", "victoria park", "vic park"],
+    "responses": ["These are some of the restaurants in Victoria Park that you may like: \n1. [Petra Restaurant](https://petrarestaurantmenu.com.au/)\n 2. [Pepper Lunch Victoria Park](http://www.pepperlunch.com.au/) 3. [Catalano's](http://catalanoscafe.com.au/)" ],
+    "context": [""]
+    },
+ 
+    {"tag": "Italian",
+     "patterns": [" Can you recommend a good Italian restaurant in the city?", "Italian Restaurant"],
+     "responses": ["Absolutely! I suggest trying TLulu La Delizia. They offer a wide variety of traditional Italian dishes and have received excellent reviews for their authentic flavors. " ],
+     "context": [""]
+    },
+ 
+    {"tag": "Indian",
+     "patterns": [" Can you recommend a good Indian restaurant in the city?", "Indian Restaurant"],
+     "responses": ["Absolutely! I suggest trying Two fat Indians. They offer a wide variety of traditional Indian dishes and have received excellent reviews for their authentic flavors. " ],
+     "context": [""]
+    },
+ 
+    {"tag": "Vegetarian",
+     "patterns": [" Where can I find some delicious vegetarian options?", "Veg Restaurant"],
+     "responses": ["Formosa GardenThere is a popular restaurant known for its creative vegetarian dishes, while  offers farm-to-table vegetarian and vegan options using locally sourced ingredients." ],
+     "context": [""]
+    },
+ 
+    {"tag": "Large Group",
+     "patterns": [" I need a restaurant that can accommodate a large group for a business dinner. Any recommendations?", "For large group"],
+     "responses": ["Tonic & Ginger is an ideal choice for large group gatherings. They have spacious private dining areas, a diverse menu to cater to different preferences, and a dedicated staff to ensure a successful business dinner." ],
+     "context": [""]
+    },
+ 
+    {"tag": "Sushi",
+     "patterns": [" I'm craving sushi. Can you suggest a good sushi restaurant nearby?", "Sushi Place"],
+     "responses": ["Aisuru Sushi is a highly recommended sushi restaurant in the area. They offer a wide selection of fresh sushi rolls and sashimi, prepared by skilled sushi chefs." ],
+     "context": [""]
+    },
+ 
+    {"tag": "Family Friendly",
+     "patterns": [" ICan you suggest a family-friendly restaurant with a kids' menu?"],
+     "responses": ["Tiamo Cafe. is a great choice for families. They have a dedicated kids' menu with a variety of child-friendly options, and the restaurant is designed to be welcoming and comfortable for families with children." ],
+     "context": [""]
+    },
+ 
+    {"tag": "Live music",
+     "patterns": ["  I'm looking for a restaurant with live music. Where can I go?"],
+     "responses": [ "The Point Rooftop Bar & Restaurant is a popular spot for live music and dining. They feature local musicians performing a variety of genres, creating a vibrant atmosphere while you enjoy your meal." ],
+     "context": [""]
+    },
+ 
+    {"tag": "Restaurants with view",
+     "patterns": ["  Do you know any restaurants with a view?"],
+     "responses": [ "For a dining experience with a view, C Restaurant in the Sky is a top choice. Located on the rooftop of a high-rise building, it offers stunning panoramic views of the city skyline while serving delicious food." ],
+     "context": [""]
+    }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+ 
+ 
+ 
+ ]
+ 
+ }
