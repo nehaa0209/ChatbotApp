@@ -25,13 +25,6 @@
     "responses": ["Hey, What location would you like to dine-in?"],
     "context": [""]
     },
- 
- 
-    {"tag": "Restaurants",
-     "patterns": ["Looking for restaurants", "Restaurants", "Restaurants near me" ],
-     "responses": ["Hey, What location would you like to dine-in?"],
-     "context": [""]
-    },
     
     {"tag": "Location-Cottesloe",
      "patterns": ["Cottesloe", "In Cottesloe"],

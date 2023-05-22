@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+    Restaurant Suggestor
+{% endblock %}
+{% block javascriptsLink %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+{% block styles %}
+    {{super()}}
+{% endblock %}
+{% block content %}
+<body>
+   <meta charset="UTF-8">
+   <ul class ="mynav">
+      <li><a href={{ url_for('logout')}}>logout</a></li>
+      <li style="float: left;"><a href="">Hi, {{session['username']}}</a></li>
+   </ul>
+   <div class="container history_div">
+   <input id="filterCards" class="search search_history" type="text" placeholder="Search text here...">
+   {% for c in chat_history %}
+   <div class="chat_div">
+      <p class= "searchable" >Me - {{ c.user}}</p>
+      <p class= "searchable" >Bot - {{ c.bot}}</p>
+   </div>
+   {% endfor %}        
+   <div></div>
+   <script src="/static/script/chatbot.js"></script>
+</body>
+{% endblock %}

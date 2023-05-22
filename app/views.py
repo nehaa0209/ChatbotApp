@@ -1,15 +1,15 @@
 
 from werkzeug.utils import redirect
 from app import app, db
-from app.models import User
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from app.models import User,Chat
 from flask import json, render_template, request, session, url_for, jsonify, flash
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import relationship
 import os
 import make_response
 from flask_wtf.csrf import CSRFProtect
-
-
 import nltk
 nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
@@ -31,47 +31,41 @@ import random
 intents = json.loads(open('app/data.json').read())
 words = pickle.load(open('texts.pkl','rb'))
 classes = pickle.load(open('labels.pkl','rb'))
-#DATABASE = 'chat_history.db'
+
 
 csrf = CSRFProtect(app)
 
+# index page
 @app.route('/')
 def index():
     return render_template('index.html')
     
+#signup page    
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
     
-    
+# function to register the users with server side vallidations    
 @app.route('/register-user', methods=['POST'])
 def register_user():
     
-    
     if request.method == "POST":
-        print("hiiiiiiiiiiiiii")
-        print(request.form)
-     
-    form = request.form
-    error_message_name = ''
-    error_message_email = ''
-    error_message_username = ''
-    error_message_phone_number = ''
-    error_message_password = ''
+        form = request.form
+        error_message_name = ''
+        error_message_email = ''
+        error_message_username = ''
+        error_message_phone_number = ''
+        error_message_password = ''
     
     flag = 0
     error_msg= []
     if form['name'] != '' and form['username'] != '' and form['email-address'] != '' and form['phone-number'] != '' and form['password'] != '':
-        print(form['username'])
-        print(form['email-address'])
-    
+
         username = User.query.filter_by(username=form['username']).first()
         userEmail = User.query.filter_by(email=form['email-address']).first()
         userPhoneNumber = User.query.filter_by(phone_number=form['phone-number']).first()
-        print(username)
-        print(userEmail)
+
         if username==None and userEmail ==None and userPhoneNumber == None:
-            print('create')
             user = User(
                 name=form['name'],
                 username=form['username'],
@@ -87,19 +81,11 @@ def register_user():
             resp = {"flag" : flag, "error_msg" : error_msg}
         else:
             if username != None:
-                print('ggggg')
                 error_msg.append("User Already exits")
-                #return render_template('signup.html', form=form,error_message  =  error_message)
-            
+               
             if userEmail != None:
-
-                print('nnnnn')
                 error_msg.append("Email Already exits")
-                #return render_template('signup.html', form=form,error_message  =  error_message)
-                
             if userPhoneNumber != None:
-
-                print('cc')
                 error_msg.append("Phone Already exits")
             resp = {"flag" : flag, "error_msg" : error_msg} 
                 
@@ -120,48 +106,53 @@ def register_user():
     
     return jsonify(resp)
     
-
+# Login functionality for user
 @app.route('/login_user', methods=['POST'])
 def login_user():
     form = request.form
     user = User.query.filter_by(username=form['username']).first()
     password = form['password']
-    #print(user.password_hash)
-    print("hiiii"+generate_password_hash(password))
-    
+   
     if not user or not check_password_hash(user.password_hash, password):
-        print("wrong")
-        flash("Password was incorrect or user doesn't exist.")
-        return render_template('index.html')
+        return render_template('index.html', msg_login = "Password was incorrect or user doesn't exist.")
     else:
-        
         session['username'] = form['username']
         return redirect('/dashboard')
-       # return redirect(url_for('auth.login'))
        
        
-
+# dashboard page with session check       
 @app.route('/dashboard')
 def dashboard():
-    print("gggggg")
     if not session.get("username"):
-        print("hiiii noooooooo")
         return render_template("index.html")
     else:
-        print("hiiii vv")
         return render_template("dashboard.html")
 
-    
         
-    
+#logout functionality        
 @app.route('/logout')
 def logout():
    # remove the username from the session if it is there
    session.pop('username', None)
    return redirect(url_for('index'))    
     
+#Saving the history    
+@app.route("/history" , methods=['GET','POST'])
+def history():
+    if not session.get("username"):
+        return render_template("index.html")
+    else:
+        form = request.form
+        chat = Chat.query.filter_by(username=form['username']).all()
+        for i in chat:
+            #print(chat.user)
+            print(i.username)
+            print(i.user)
+            print(i.bot)
+    
 
-
+        return render_template("history.html", chat_history=chat)
+    
 def clean_up_sentence(sentence):
     # tokenize the pattern - split words into array
     sentence_words = nltk.word_tokenize(sentence)
@@ -212,19 +203,27 @@ def chatbot_response(msg):
     res = getResponse(ints, intents)
     return res
 
-
-
+# Function to get bot response
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
+    username = request.args.get('username')
+    response = chatbot_response(userText)
+    save_chat_history(username, userText, response)
     return chatbot_response(userText)
 
 
-
-
-
-        
-
+# function to save the chat
+def save_chat_history(usr, user_message, bot_response):
+    print("in save history")  
+    chat = Chat(
+            username  =  usr,
+            user=user_message,
+            bot=bot_response
+        )
+    db.session.add(chat)
+    db.session.commit()
+    
 
 
 

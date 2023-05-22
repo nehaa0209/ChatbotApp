@@ -15,3 +15,10 @@ class User(db.Model):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+class Chat(db.Model):
+    id= db.Column(db.Integer, unique=True,primary_key=True)
+    username = db.Column(db.Integer, nullable=False)
+    user = db.Column(db.TEXT, nullable=False)
+    bot = db.Column(db.TEXT, nullable=False)
+    

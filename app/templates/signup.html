@@ -12,103 +12,76 @@ ChatBot
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 {% endblock %}
 {% block content %}
-<nav class="navbar container-flex navbar-expand-lg navbar-light bg-black">
-   <div class="col-sm-12 col-12 col-md-12 col-lg-12 col-xl-12">
+<body>
+   <nav class="navbar container-flex navbar-expand-lg navbar-light bg-black">
+      <div class="col-sm-12 col-12 col-md-12 col-lg-12 col-xl-12">
+         <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+               <h2 class="heading_chat">CHATBOT</h2>
+            </div>
+         </div>
+      </div>
+   </nav>
+   <div class="container forget-password">
       <div class="row">
-         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <h2 class="heading_chat">CHATBOT</h2>
-         </div>
-      </div>
-   </div>
-</nav>
-<div class="container forget-password">
-<div class="row">
-<div class="col-12 col-sm-12 col-xl-12 col-lg-12 col-md-12 col-md-offset-4">
-   <div class="panel panel-default">
-      <div class="panel-body">
-         <div class="signup_cont">
-            <h2 class="text-center">Sign Up</h2>
-            <!-- <p>You can reset your password here.</p> -->
-            <form name="registration-form" id="form_register" action='/register-user' method='post'>
-                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />
-               <label>Name</label>
-               <div class = "my_input">
-                  <input type="text" id="name" name="name">
-                  <p id= "nameErrorMsg" class="error"> </p>
-                  
-               </div>
-               <label>Username</label>
-               <div class = "my_input">
-                  <input id="username" name="username" type="text">
-                  <p id= "usernameErrorMsg" class="error"></p>
-                  
-               </div>
-               <label>Email Address</label>
-               <div class = "my_input">
-                  <input id="email" name ="email-address" onfocusout="checkIfUserExistsWithEvent(event)" type="email">
-                  <p id= "emailErrorMsg" class="error"></p>
-                  
-               </div>
-               <label>Phone Number</label>
-               <div class = "my_input">
-                  <input id="phonenumber" name ="phone-number" type="text">
-                  <p id= "phonenumberErrorMsg" class="error"></p>
-                 
-                  <div>
-                     <label>Password</label>
-                     <div class = "my_input">
-                        <input id="password" name="password" type="password">
-                        <p id= "passwordErrorMsg" class="error"></span>
-                        
+         <div class="col-12 col-sm-12 col-xl-12 col-lg-12 col-md-12 col-md-offset-4">
+            <div class="panel panel-default">
+               <div class="panel-body">
+                  <div class="signup_cont">
+                     <h2 class="text-center">Sign Up</h2>
+                     <!-- <p>You can reset your password here.</p> -->
+                     <form name="registration-form" id="form_register" action='/register-user' method='post'>
+                        <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />
+                        <label>Name</label>
+                        <div class = "my_input">
+                           <input type="text" id="name" name="name">
+                           <p id= "nameErrorMsg" class="error"> </p>
+                        </div>
+                        <label>Username</label>
+                        <div class = "my_input">
+                           <input id="username" name="username" type="text">
+                           <p id= "usernameErrorMsg" class="error"></p>
+                        </div>
+                        <label>Email Address</label>
+                        <div class = "my_input">
+                           <input id="email" name ="email-address" onfocusout="checkIfUserExistsWithEvent(event)" type="email">
+                           <p id= "emailErrorMsg" class="error"></p>
+                        </div>
+                        <label>Phone Number</label>
+                        <div class = "my_input">
+                           <input id="phonenumber" name ="phone-number" type="text">
+                           <p id= "phonenumberErrorMsg" class="error"></p>
+                           <div>
+                              <label>Password</label>
+                              <div class = "my_input">
+                                 <input id="password" name="password" type="password">
+                                 <p id= "passwordErrorMsg" class="error"></span>
+                              </div>
+                              <div class= "server_side_errors" id="server_side_errors"></div>
+                              <button class="button_submit" type="submit" id="register-btn">Submit</button>
+                     </form>
+                     <div id="form-response"></div>
                      </div>
-
-                    <div class= "server_side_errors" id="server_side_errors"></div> 
-                     <button class="button_submit" type="submit" id="register-btn">Submit</button>
-            </form>
-            <div id="form-response"></div>
-            </div>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
       </div>
    </div>
-</div>
-
-
- 
-  </div>
-</div>
    <!-- Footer -->
    <div class="footer_body">
-    <div class="container">
+   <div class="container">
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center;">
-          <div class="logo_img">
-            <img  class="footer_img" src="static/img/logo.png">
-
-          </div>
-
-        </div>
-        <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-          <div class="logo_img">
-            jhjkhkjjjo
-          </div>
-
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-          <div class="logo_img">
-            jhjkhkjjjo
-          </div>
-
-        </div> -->
+         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align:center;">
+            <div class="logo_img">
+               <img  class="footer_img" src="static/img/logo.png">
+            </div>
+         </div>
       </div>
-    </div>
-<script src="/static/script/chatbot.js">
-   
-</script>
+   </div>
+   <script src="/static/script/chatbot.js"></script>
 </body>
-</html>
 {% endblock %}
