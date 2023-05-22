@@ -22,7 +22,7 @@ for intent in intents['intents']:
     for pattern in intent['patterns']:
 
         #tokenize each word
-        w = nltk.word_tokenize(pattern)
+        w =nltk.word_tokenize(pattern)
         words.extend(w)
         #add documents in the corpus
         documents.append((w, intent['tag']))

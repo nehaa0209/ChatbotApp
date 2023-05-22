@@ -4,14 +4,22 @@ from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
-
+import sqlite3
+from flask import g
+from datetime import datetime
+import datetime
+import pytz
 from keras.models import load_model
+import uuid
+
 model = load_model('model.h5')
 import json
 import random
 intents = json.loads(open('data.json').read())
 words = pickle.load(open('texts.pkl','rb'))
 classes = pickle.load(open('labels.pkl','rb'))
+DATABASE = 'chat_history.db'
+
 
 def clean_up_sentence(sentence):
     # tokenize the pattern - split words into array
@@ -63,6 +71,14 @@ def chatbot_response(msg):
     res = getResponse(ints, intents)
     return res
 
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+        db.execute('CREATE TABLE IF NOT EXISTS chat_history (id INTEGER PRIMARY KEY, user_id INTEGER user TEXT, bot TEXT, conversation_timestamp DATETIME )')
+    return db
+
+
 
 from flask import Flask, render_template, request
 
@@ -71,13 +87,61 @@ app.static_folder = 'static'
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("chat.html")
+
+history = []
 
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
-    return chatbot_response(userText)
+    response = chatbot_response(userText)
+    save_chat_history(userText, response)
+    return response
+
+def save_chat_history(user_message, bot_response):
+    db = get_db()
+    db.execute('INSERT INTO chat_history ( user, bot, conversation_timestamp) VALUES ( ?, ?, ?)', (user_message, bot_response, datetime.date.today()))
+    db.commit()
+
+def get_user_chats(user_id):
+    db = get_db()
+    cursor = db.execute('SELECT chat_history FROM user_chats WHERE user_id = 1', (user_id,))
+    chat_history = cursor.fetchall()
+    return chat_history
+
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
+def save_user_chats(user_id, chat_history):
+    db = get_db()
+    db.execute('INSERT INTO user_chats (user_id, chat_history) VALUES (?, ?)', (user_id, chat_history))
+    db.commit()
+
+
+
+
+
+@app.route("/history")
+def chat_history():
+    db = get_db()
+    cursor = db.execute('SELECT user, bot, conversation_timestamp FROM chat_history')
+    history = cursor.fetchall()
+    return render_template("history.html", chat_history=history)
+
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+            db.commit()
 
 
 if __name__ == "__main__":
+   
     app.run()
+
